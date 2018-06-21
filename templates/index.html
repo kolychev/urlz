@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/add" method="POST">
+	<input id="id_url" name="url" placeholder="Url" type="text" autofocus />
+	<input type="submit" class="btn btn-success" value="Add url!" />
+</form>
+
+<ul>
+	{% for url in urls %}
+	<li>
+		<div class="wrap">
+			<b><a class="urlb" href="/{{ url.url_id }}">{{url.url_id}}</a></b>
+
+			<p><a class="url" href="/{{ url.url_id }}">{{ url.url }}</a></p>
+
+			<p class="url-info">
+			{% if "clicks_count" in url %}
+				<i class="icon icon-heart"></i> 
+				{{url.clicks_count}} 
+				<i class="icon icon-time"></i>
+				{{ url.date_last_access |timesince }}
+
+			{% endif %}
+				<i class="icon icon-qrcode"></i>
+        <a href="#" class="show_qrcode">QRCode</a>
+			</p>
+		</div>
+	</li>
+	{% endfor %}
+</ul>
+{% if show_all_urls_btn %}
+<a href="/all" style="margin-top: 20px;" class="btn btn-success">Show all URLs</a>
+{% endif %}
+
+<hr />
+{% endblock content %}
